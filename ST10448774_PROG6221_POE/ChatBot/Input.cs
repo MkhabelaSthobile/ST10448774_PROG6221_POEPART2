@@ -19,7 +19,7 @@ namespace ChatBot
             this.input = input;
         }
 
-        public string RespondToInput(string input)
+        public string RespondToInput()
         {
 
             string[] phishingTips = { "Be cautious of emails asking for personal information.",
@@ -105,11 +105,17 @@ namespace ChatBot
                 Console.WriteLine("Cybersecurity is the practice of protecting systems, networks, and data from digital attacks.\n");
                 lastTopic = "define cybersecurity";
             }
-            else if (input.ToLower().Contains("tell me more") && lastTopic == "define cybersecurity")
+            else if (input.ToLower().Contains("tell me more"))
             {
-                
+                lastTopic = "define cybersecurity";
+                if(lastTopic == "define cybersecurity")
+                {
                     Console.WriteLine("Cybersecurity encompasses the practices, technologies, and processes used to protect computer systems, networks, and data from unauthorized access, use, disclosure, disruption, modification, or destruction.");
-                
+                }
+                else
+                {
+                    Console.WriteLine("Can you clarify what you want to know more about?");
+                }
             }
 
             else if ((input.Contains("define") || input.Contains("what is") || input.Contains("about")) && input.Contains("phishing"))
@@ -119,6 +125,7 @@ namespace ChatBot
             }
             else if (input.ToLower().Contains("tell me more"))
             {
+                lastTopic = "define phishing";
                 if (lastTopic == "define phishing")
                     Console.WriteLine("Phishing emails often look like they come from trusted sources.");
                 else
@@ -229,7 +236,7 @@ namespace ChatBot
                 }
 
             }
-            else if (input.Contains("common cyberattacks") || input.Contains("common cyber attacks"))
+            else if (input.Contains("common cyberattacks") || input.Contains("common cyber attacks") || input.Contains("a list of cyberattack"))
             {
                 for (int i = 0; i < cyberAttacks.Length; i++)
                 {
@@ -280,7 +287,7 @@ namespace ChatBot
                     }
                 }
             }
-            else if (input.Contains("security measures"))
+            else if (input.Contains("security measures") || input.Contains("a list of security measures"))
             {
                 for (int i = 0; i < securityMeasures.Length; i++)
                 {
@@ -338,9 +345,26 @@ namespace ChatBot
 
             }
 
-            //We've spoken of phishing attack as a type of cyber attack... here are a few oth
-
             Console.ResetColor();
+
+            return input;
+        }
+
+        public string Elaborate(string input)
+        {
+            var elaborations = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "Cybersecurity", "Cybersecurity includes practices like using strong passwords, enabling firewalls, keeping software updated, and being cautious online." },
+                { "Cyberattack", "Cyberattacks include malware, ransomware, phishing, and other tactics used to gain unauthorized access or cause damage." },
+                { "Phishing", "Phishing emails may look legitimate but often contain suspicious links, urgent messages, and ask for personal info." },
+                { "Password safety", "Avoid using common passwords. Use a password manager and enable two-factor authentication where possible." },
+                { "Safe browsing", "Avoid unknown sites, check for HTTPS, don’t download random files, and use browser security extensions." }
+            };
+
+            if (elaborations.ContainsKey(input))
+                Console.WriteLine(elaborations[input] + "\n");
+            else
+                Console.WriteLine("Sorry, I can't elaborate further on that topic.\n");
 
             return input;
         }

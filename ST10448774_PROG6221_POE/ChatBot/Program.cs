@@ -110,7 +110,7 @@ namespace ChatBot
                 }
 
                 Input inputt = new Input();
-                inputt.RespondToInput(input);
+                inputt.RespondToInput();
 
             }
         }
