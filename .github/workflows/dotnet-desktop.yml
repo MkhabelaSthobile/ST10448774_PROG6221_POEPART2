@@ -36,7 +36,7 @@
 # For a complete CI/CD sample to get started with GitHub Action workflows for Desktop Applications,
 # refer to https://github.com/microsoft/github-actions-for-desktop-apps
 
-name: .NET Core Desktop
+name: .NET Framework Desktop Build
 
 on:
   push:
@@ -46,31 +46,29 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        configuration: [Debug, Release]
-
     runs-on: windows-latest
 
     env:
       Solution_Name: ChatBot.sln
 
     steps:
-    - name: Checkout
+    - name: Checkout repository
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
 
-    - name: Install .NET Core SDK
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
 
     - name: Restore NuGet packages
-      run: dotnet restore ${{ env.Solution_Name }}
+      run: nuget restore ${{ env.Solution_Name }}
       working-directory: ST10448774_PROG6221_POEPART2/ST10448774_PROG6221_POE/ChatBot
 
     - name: Build solution
-      run: dotnet build ${{ env.Solution_Name }} --configuration ${{ matrix.configuration }} --no-restore
+      run: msbuild ${{ env.Solution_Name }} /p:Configuration=Release
       working-directory: ST10448774_PROG6221_POEPART2/ST10448774_PROG6221_POE/ChatBot
-    
+
+    - name: Upload build output
+      uses: actions/upload-artifact@v3
+      with:
+        name: ChatBot-build
+        path: ST10448774_PROG6221_POEPART2/ST10448774_PROG6221_POE/ChatBot/bin/Release/
+
