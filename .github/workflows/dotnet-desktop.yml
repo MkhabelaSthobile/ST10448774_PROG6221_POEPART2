@@ -66,10 +66,11 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Restore dependencies
-      run: dotnet restore ${{ env.ChatBot.sln }}
+    - name: Restore NuGet packages
+      run: dotnet restore ${{ env.Solution_Name }}
+      working-directory: ChatBot
 
-    - name: Build
-      run: dotnet build ${{ env.ChatBot.sln }} --configuration ${{ matrix.configuration }} --no-restore
-
+    - name: Build solution
+      run: dotnet build ${{ env.Solution_Name }} --configuration ${{ matrix.configuration }} --no-restore
+      working-directory: ChatBot
     
