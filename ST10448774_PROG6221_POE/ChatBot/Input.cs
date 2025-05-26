@@ -9,6 +9,8 @@ namespace ChatBot
     public class Input
     {
         private string input;
+        private Dictionary<string, string> memory = new Dictionary<string, string>();
+
         public Input() 
         { 
             input = null;
@@ -19,7 +21,7 @@ namespace ChatBot
             this.input = input;
         }
 
-        public string RespondToInput()
+        public string RespondToInput(string input, string userName)
         {
 
             string[] phishingTips = { "Be cautious of emails asking for personal information.",
@@ -41,8 +43,7 @@ namespace ChatBot
                                            {"Passkeys", "These are digital credentials that use biometric authentication or a PIN instead of passwords, offering increased security and convenience."},
                                            {"Patch Management", "Involves regularly updating software to address vulnerabilities and security flaws."} };
 
-            string lastTopic = "";
-
+            
             Console.ForegroundColor = ConsoleColor.Blue;
 
             if (input.Contains("hey") || input.Contains("hello"))
@@ -80,91 +81,56 @@ namespace ChatBot
             }
             else if (input.Contains("worried") || input.Contains("scared") || input.Contains("anxious"))
             {
-                Console.WriteLine("It’s okay to feel that way. Cybersecurity can be confusing, but I’ll help you understand it.");
+                Console.WriteLine("It’s okay to feel that way. Cybersecurity can be confusing, but I’ll help you understand it.\n");
                 Console.ResetColor();
             }
-            else if (input.Contains("curious") || input.Contains("interested"))
+            else if (input.Contains("curious"))
             {
-                Console.WriteLine("Curiosity is great! Let’s explore cybersecurity together.");
+                Console.WriteLine("Curiosity is great! Let’s explore cybersecurity together.\n");
                 Console.ResetColor();
             }
             else if (input.Contains("frustrated") || input.Contains("confused"))
             {
-                Console.WriteLine("No worries. Just ask your question in a different way, and I’ll do my best to help.");
+                Console.WriteLine("No worries. Just ask your question in a different way, and I’ll do my best to help.\n");
                 Console.ResetColor();
             }
             else if ((input.Contains("what can I ask you") || input.Contains("can I ask you") || input.Contains("ask")) || input.Contains("topics") || input.Contains("topic"))
             {
-                Console.WriteLine("You can ask me about phishing, password safety, or safe browsing.\n");
+                Console.WriteLine("You can ask me about the topics mentioned above.\n");
+                AskUserPreferences();
 
             }
-
-
-            else if ((input.Contains("define") || input.Contains("what is") || input.Contains("about")) && input.Contains("cybersecurity"))
+            else if (input.Contains("define") && input.Contains("cybersecurity") || input.Contains("what is cybersecurity"))
             {
                 Console.WriteLine("Cybersecurity is the practice of protecting systems, networks, and data from digital attacks.\n");
-                lastTopic = "define cybersecurity";
+                
             }
-            else if (input.ToLower().Contains("tell me more"))
-            {
-                lastTopic = "define cybersecurity";
-                if(lastTopic == "define cybersecurity")
-                {
-                    Console.WriteLine("Cybersecurity encompasses the practices, technologies, and processes used to protect computer systems, networks, and data from unauthorized access, use, disclosure, disruption, modification, or destruction.");
-                }
-                else
-                {
-                    Console.WriteLine("Can you clarify what you want to know more about?");
-                }
-            }
-
-            else if ((input.Contains("define") || input.Contains("what is") || input.Contains("about")) && input.Contains("phishing"))
+            else if (input.Contains("define") && input.Contains("phishing") || input.Contains("what is phishing"))
             {
                 Console.WriteLine("Phishing is a cyberattack where attackers impersonate trusted entities to trick people into revealing sensitive information.\n");
-                lastTopic = "define phishing";
+                
             }
-            else if (input.ToLower().Contains("tell me more"))
-            {
-                lastTopic = "define phishing";
-                if (lastTopic == "define phishing")
-                    Console.WriteLine("Phishing emails often look like they come from trusted sources.");
-                else
-                    Console.WriteLine("Can you clarify what you want to know more about?");
-            }
-
-            //Check
-
-            else if ((input.Contains("how") || input.Contains("safe") || input.Contains("precautions")) && input.Contains("phishing"))
+            else if ((input.Contains("how") && input.Contains("safe") || input.Contains("precautions")) && input.Contains("phishing"))
             {
                 Console.WriteLine("Safety precautions against phishing include:");
                 Console.WriteLine("- Don't share personal info with unknown sources");
                 Console.WriteLine("- Use strong, unique passwords");
                 Console.WriteLine("- Enable multi-factor authentication");
                 Console.WriteLine("- Avoid clicking on suspicious links or email attachments\n");
-                lastTopic = "phishing safety precautions";
+                
+            }
+            else if (input.Contains("tell me more") && input.Contains("phishing safety precautions") || input.Contains("phishing safety precautions"))
+            {
+                Console.WriteLine("Safety precautions against phishing include:");
+                Console.WriteLine("- Don't share personal info with unknown sources" + "\nAs long as you don't know the person online, do not give them any personal information.\n");
+                Console.WriteLine("- Use strong, unique passwords" + "\nAvoid using the same password across multiple accounts, and consider using a password manager to generate and store strong, unique passwords.\n");
+                Console.WriteLine("- Enable multi-factor authentication" + "\n(MFA) means requiring users to provide two or more verification factors, such as a password and a code sent to their phone, before they can access an account or system.\n");
+                Console.WriteLine("- Avoid clicking on suspicious links or email attachments" + "\nHover over links to see where they actually lead before clicking, and be cautious about opening attachments from unknown senders.\n");
 
             }
-            else if (input.ToLower().Contains("tell me more"))
+            else if (input.Contains("types") && input.Contains("phishing"))
             {
-                if (lastTopic == "phishing safety precautions")
-                {
-                    Console.WriteLine("Safety precautions against phishing include:");
-                    Console.WriteLine("- Don't share personal info with unknown sources" + "\nAs long as you don't know the person online, do not give them any personal information.\n");
-                    Console.WriteLine("- Use strong, unique passwords" + "\nAvoid using the same password across multiple accounts, and consider using a password manager to generate and store strong, unique passwords.\n");
-                    Console.WriteLine("- Enable multi-factor authentication" + "\n(MFA) means requiring users to provide two or more verification factors, such as a password and a code sent to their phone, before they can access an account or system.\n");
-                    Console.WriteLine("- Avoid clicking on suspicious links or email attachments" + "\nHover over links to see where they actually lead before clicking, and be cautious about opening attachments from unknown senders.\n");
-
-                }
-                else
-                {
-                    Console.WriteLine("Can you clarify what you want to know more about?");
-                }
-
-            }
-
-            else if (input.Contains("types") || input.Contains("examples") && input.Contains("phishing"))
-            {
-                Console.WriteLine("Examples of phishing include:");
+                Console.WriteLine("Types of phishing include:");
                 Console.WriteLine("- Email phishing");
                 Console.WriteLine("- Spear phishing");
                 Console.WriteLine("- Smishing (SMS phishing)");
@@ -172,9 +138,14 @@ namespace ChatBot
                 Console.WriteLine("- Clone phishing\n");
 
             }
-
-
-
+            else if (input.Contains("elaborate") && input.Contains("types of phishing") || input.Contains("tell me more") && input.Contains("types of phishing"))
+            {
+                Console.WriteLine("- Email phishing\n" + "The most prevalent type, using emails that appear legitimate to trick recipients into revealing sensitive information or clicking malicious links.\n");
+                Console.WriteLine("- Spear phishing\n" + "Targets a specific individual or group within an organization, often with personalized messages, to exploit their trust and gather more specific information.\n");
+                Console.WriteLine("- Smishing (SMS phishing)\n" + "Utilizes SMS messages to deceive victims into revealing information or clicking malicious links.\n");
+                Console.WriteLine("- Vishing (voice phishing)\n" + "Involves phone calls designed to trick individuals into revealing personal information.\n");
+                Console.WriteLine("- Clone phishing\n" + "Creates exact replicas of legitimate emails or websites to trick victims into providing sensitive information.\n");
+            }
             else if ((input.Contains("define") || input.Contains("what is")) && input.Contains("password safety"))
             {
                 Console.WriteLine("Password safety means using good habits to protect your accounts and sensitive information.\n");
@@ -212,15 +183,39 @@ namespace ChatBot
             }
             else if (input.Contains("What is password safety") || input.Contains("password safety"))
             {
-                Console.WriteLine("Make sure to use strong, unique passwords for each account. Avoid using personal details in your passwords.\n");
+                Console.WriteLine("Password safety is the practice of creating, managing, and protecting strong passwords to secure online accounts and prevent unauthorized access.\n");
             }
             else if (input.Contains("scam"))
             {
-                Console.WriteLine("Watch out for online scams. Be cautious of offers that seem too good to be true, and never share personal or banking info with strangers.\n");
+                Console.WriteLine("A scam is a deceptive scheme or illegal trick, often perpetrated online, with the goal of defrauding individuals or organizations.\n");
+            }
+            else if (input.Contains("types") && input.Contains("phishing"))
+            {
+                Console.WriteLine("Types of scams include:");
+                Console.WriteLine("- Investment scams");
+                Console.WriteLine("- Romance fraud");
+                Console.WriteLine("- Job scams");
+                Console.WriteLine("- Identity theft");
+            }
+            else if (input.Contains("elaborate") && input.Contains("scams") || input.Contains("tell me more") && input.Contains("scams"))
+            {
+                Console.WriteLine("- Investment scams\n" + "These scams involve fraudulent investment opportunities, often promising high returns with little risk.\n");
+                Console.WriteLine("- Romance fraud\n" + "Scammers build relationships with victims online, then request money or personal information under false pretenses.\n");
+                Console.WriteLine("- Job Scams\n" + "Scammers offer fake job opportunities, often requiring upfront fees or personal information.\n");
+                Console.WriteLine("- Identity theft\n" + "Scammers steal personal information to open fraudulent accounts or commit other crimes.\n");
+
             }
             else if (input.Contains("privacy"))
             {
-                Console.WriteLine("Protect your privacy by limiting what you share online, using encrypted messaging apps, and regularly checking app permissions.\n");
+                Console.WriteLine("Data privacy, also called information privacy, is the principle that a person should have control over their personal data, including the ability to decide how organizations collect, store and use their data.\n");
+            }
+            else if (input.Contains("types") && input.Contains("privacy practices") || input.Contains("privacy practices"))
+            {
+                Console.WriteLine("Privacy practices include:");
+                Console.WriteLine("- Make use of privacy policies");
+                Console.WriteLine("- Restrict access to personal data to authorized personnel");
+                Console.WriteLine("- Obtain explicit consent to make use of personal data");
+                Console.WriteLine("- Implement procedures to ensure that data can be recovered in case of loss or damage.\n");
             }
             else if (input.Contains("phishing tip"))
             {
@@ -236,109 +231,124 @@ namespace ChatBot
                 }
 
             }
-            else if (input.Contains("common cyberattacks") || input.Contains("common cyber attacks") || input.Contains("a list of cyberattack"))
+            else if (input.Contains("common cyberattacks") || input.Contains("common cyber attacks") || input.Contains("a list of cyberattacks") || input.Contains("cyberattacks"))
             {
                 for (int i = 0; i < cyberAttacks.Length; i++)
                 {
                     Console.WriteLine("~ " + cyberAttacks[i, 0] + "\n");
                 }
 
-                Console.WriteLine("Would you like the definitions of these cyberattacks? Select a response from the following options " + "\n -'No'\n -'Yes'\n You may choose one cyber attack to be defined\n");
+                Console.WriteLine("Would you like the definitions of these cyberattacks? Select a response:\n - 'No'\n - 'Yes'\n Or type the name of a cyberattack to learn more:");
+                string answer = Console.ReadLine();
 
-                for (int i = 0; i < cyberAttacks.Length; i++)
+                switch (answer)
                 {
-                    switch (input)
-                    {
-                        case "No":
-                            Console.WriteLine("Ok no problem\n Feel free to ask me anything else.");
-                            break;
+                    case "No":
+                        Console.WriteLine("Ok, no problem.\nFeel free to ask me anything else.");
+                        break;
 
-                        case "Yes":
-                            Console.WriteLine(cyberAttacks[i, 0] + "\n" + cyberAttacks[i, 1]);
-                            break;
+                    case "Yes":
+                        for (int i = 0; i < cyberAttacks.GetLength(0); i++)
+                        {
+                            Console.WriteLine(cyberAttacks[i, 0] + "\n" + cyberAttacks[i, 1] + "\n");
+                        }
+                        break;
 
-                        case "Malware":
-                            Console.WriteLine(cyberAttacks[0, 0] + "\n" + cyberAttacks[0, 1]);
-                            break;
-
-                        case "Ransomware":
-                            Console.WriteLine(cyberAttacks[1, 0] + "\n" + cyberAttacks[1, 1]);
-                            break;
-
-                        case "DDoS (Distributed Denial of Service) attack":
-                            Console.WriteLine(cyberAttacks[2, 0] + "\n" + cyberAttacks[2, 1]);
-                            break;
-
-                        case "SQL Injection":
-                            Console.WriteLine(cyberAttacks[3, 0] + "\n" + cyberAttacks[3, 1]);
-                            break;
-
-                        case "Cross-Site Scripting":
-                            Console.WriteLine(cyberAttacks[4, 0] + "\n" + cyberAttacks[4, 1]);
-                            break;
-
-                        case "Man-in-the-Middle (MITM) attack":
-                            Console.WriteLine(cyberAttacks[5, 0] + "\n" + cyberAttacks[5, 1]);
-                            break;
-
-                        default:
-                            Console.WriteLine("Your response was invalid. Please try again.\n");
-                            break;
-                    }
+                    default:
+                        bool found = false;
+                        for (int i = 0; i < cyberAttacks.GetLength(0); i++)
+                        {
+                            if (cyberAttacks[i, 0].Equals(answer, StringComparison.OrdinalIgnoreCase))
+                            {
+                                Console.WriteLine(cyberAttacks[i, 0] + "\n" + cyberAttacks[i, 1] + "\n");
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found)
+                        {
+                            Console.WriteLine("Your response was not recognized. Please try again.\n");
+                        }
+                        break;
                 }
+
             }
             else if (input.Contains("security measures") || input.Contains("a list of security measures"))
             {
-                for (int i = 0; i < securityMeasures.Length; i++)
+                for (int i = 0; i < securityMeasures.GetLength(0); i++)
                 {
                     Console.WriteLine("~ " + securityMeasures[i, 0] + "\n");
                 }
 
-                Console.WriteLine("Would you like me to define these security measures? Select a response from the following options " + "\n -'No'\n -'Yes'\n You may choose one security measure to be defined\n");
+                Console.WriteLine("Would you like the definitions of these security measures? Select a response:\n - 'No'\n - 'Yes'\n Or type the name of a security measure to learn more:");
+                string response = Console.ReadLine();
 
-                for (int i = 0; i < securityMeasures.Length; i++)
+                switch (response)
                 {
-                    switch (input)
-                    {
-                        case "No":
-                            Console.WriteLine("Ok no problem\n Feel free to ask me anything else.");
-                            break;
+                    case "No":
+                        Console.WriteLine("Ok, no problem.\nFeel free to ask me anything else.");
+                        break;
 
-                        case "Yes":
-                            Console.WriteLine(securityMeasures[i, 0] + "\n" + securityMeasures[i, 1]);
-                            break;
+                    case "Yes":
+                        for (int i = 0; i < securityMeasures.GetLength(0); i++)
+                        {
+                            Console.WriteLine(securityMeasures[i, 0] + "\n" + securityMeasures[i, 1] + "\n");
+                        }
+                        break;
 
-                        case "Encription":
-                            Console.WriteLine(securityMeasures[0, 0] + "\n" + securityMeasures[0, 1]);
-                            break;
+                    default:
+                        bool found = false;
+                        for (int i = 0; i < securityMeasures.GetLength(0); i++)
+                        {
+                            if (securityMeasures[i, 0].Equals(response, StringComparison.OrdinalIgnoreCase))
+                            {
+                                Console.WriteLine(securityMeasures[i, 0] + "\n" + securityMeasures[i, 1] + "\n");
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found)
+                        {
+                            Console.WriteLine("Your response was not recognized. Please try again.\n");
+                        }
+                        break;
+                }
 
-                        case "Two-factor authentication":
-                            Console.WriteLine(securityMeasures[1, 0] + "\n" + securityMeasures[1, 1]);
-                            break;
-
-                        case "2FA":
-                            Console.WriteLine(securityMeasures[1, 0] + "\n" + securityMeasures[1, 1]);
-                            break;
-
-                        case "Firewall":
-                            Console.WriteLine(securityMeasures[2, 0] + "\n" + securityMeasures[2, 1]);
-                            break;
-
-                        case "Passkeys":
-                            Console.WriteLine(securityMeasures[3, 0] + "\n" + securityMeasures[3, 1]);
-                            break;
-
-                        case "Patch Management":
-                            Console.WriteLine(securityMeasures[4, 0] + "\n" + securityMeasures[4, 1]);
-                            break;
-
-                        default:
-                            Console.WriteLine("Your response was invalid. Please try again.\n");
-                            break;
-                    }
+            }
+            else if (input.Contains("tell me more") || input.Contains("elaborate"))
+            {
+                Elaborate(input);
+            }
+            else if (input.Contains("remember what cybersecurity topic") || input.Contains("my cybersecurity interest"))
+            {
+                Console.WriteLine("You mentioned that you are interested in " + memory["interest"]); 
+            }
+            else if (input.Contains("what is") || input.Contains("level") || input.Contains("what is") && input.Contains("level of cybersecurity"))
+            {
+                Console.WriteLine("You mentioned that your level of cybersecurity knowledge is " + memory["knowledgeLevel"]);
+            }
+            else if (input.Contains("am I") && input.Contains("social media"))
+            {
+                if(memory["social media"].ToLower() == "yes")
+                {
+                    Console.WriteLine(memory["social media"] + ", you are.");
+                }
+                else
+                {
+                    Console.WriteLine(memory["social media"] + ", you are not.");
                 }
             }
-
+            else if (input.Contains("what do you remember about me"))
+            {
+                Console.WriteLine("Here's what I remember about you:");
+                Console.WriteLine("• Your cybersecurity interest is: " + memory["interest"]);
+                Console.WriteLine("• Your knowledge level is: " + memory["knowledgeLevel"]);
+                Console.WriteLine("• Active on social media: " + memory["social media"]);
+            }
+            else if (input.Contains("what is my username") || input.Contains("what is my name"))
+            {
+                Console.WriteLine("Your username is " + userName);
+            }
             else
             {
                 Console.WriteLine("Hmm... I didn’t quite understand that. Can you rephrase?");
@@ -354,11 +364,16 @@ namespace ChatBot
         {
             var elaborations = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
-                { "Cybersecurity", "Cybersecurity includes practices like using strong passwords, enabling firewalls, keeping software updated, and being cautious online." },
-                { "Cyberattack", "Cyberattacks include malware, ransomware, phishing, and other tactics used to gain unauthorized access or cause damage." },
-                { "Phishing", "Phishing emails may look legitimate but often contain suspicious links, urgent messages, and ask for personal info." },
-                { "Password safety", "Avoid using common passwords. Use a password manager and enable two-factor authentication where possible." },
-                { "Safe browsing", "Avoid unknown sites, check for HTTPS, don’t download random files, and use browser security extensions." }
+                { "Cybersecurity", "Cybersecurity includes practices like using strong passwords, enabling firewalls, keeping software updated, and being cautious online."},
+                { "Cyberattack", "Cyberattacks include malware, ransomware, phishing, and other tactics used to gain unauthorized access or cause damage."},
+                { "Cyberattacks", "Cyberattacks include malware, ransomware, phishing, and other tactics used to gain unauthorized access or cause damage."},
+                { "Phishing", "Phishing emails may look legitimate but often contain suspicious links, urgent messages, and ask for personal info."},
+                { "Password safety", "Avoid using common passwords. Use a password manager and enable two-factor authentication where possible."},
+                { "Safe browsing", "Avoid unknown sites, check for HTTPS, don’t download random files, and use browser security extensions."},
+                { "Password safety", "Make sure to use strong, unique passwords for each account. Avoid using personal details in your passwords"},
+                { "Scam", "Be cautious of offers that seem too good to be true, and never share personal or banking info with strangers."},
+                { "Scams", "Be cautious of offers that seem too good to be true, and never share personal or banking info with strangers."},
+                { "Privacy", "Protect your privacy by limiting what you share online, using encrypted messaging apps, and regularly checking app permissions."}
             };
 
             if (elaborations.ContainsKey(input))
@@ -368,5 +383,77 @@ namespace ChatBot
 
             return input;
         }
+
+        public void AskUserPreferences()
+        {
+            Console.WriteLine("Before we continue, I'd like to get to know your cybersecurity interests better. Please answer the following questions.\n");
+
+            // 1. Interest
+            Console.WriteLine("1. What cybersecurity topic are you most interested in? (e.g., phishing, privacy, password safety, cyberattacks)");
+            string interest = Console.ReadLine().Trim().ToLower();
+            if (string.IsNullOrEmpty(interest))
+            {
+                interest = "general cybersecurity";
+            }
+            memory["interest"] = interest;
+            Console.WriteLine("Got it! I'll remember that you're interested in " + interest + ".\n");
+
+            // 2. Knowledge level
+            string level = "";
+            while (true)
+            {
+                Console.WriteLine("2. What’s your level of cybersecurity knowledge? (beginner, intermediate, expert)");
+                level = Console.ReadLine().Trim().ToLower();
+
+                switch (level)
+                {
+                    case "beginner":
+                    case "novice":
+                        level = "beginner";
+                        break;
+                    case "intermediate":
+                        break;
+                    case "expert":
+                    case "advanced":
+                    case "pro":
+                        level = "expert";
+                        break;
+                    default:
+                        Console.WriteLine("Sorry, I didn't understand that. Please type: beginner, intermediate, or expert.");
+                        continue;
+                }
+                break;
+            }
+            memory["knowledgeLevel"] = level;
+            Console.WriteLine("Thanks! I'll remember you're a(n) " + level + " user.\n");
+
+            // 3. Social media
+            string active = "";
+            while (true)
+            {
+                Console.WriteLine("3. Are you active on social media? (Yes/No)");
+                active = Console.ReadLine().Trim().ToLower();
+
+                if (active == "yes" || active == "y")
+                {
+                    active = "Yes";
+                    break;
+                }
+                else if (active == "no" || active == "n")
+                {
+                    active = "No";
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Please answer 'Yes' or 'No'.");
+                }
+            }
+            memory["social media"] = active;
+            Console.WriteLine("Understood! I'll provide friendly explanations when possible.\n");
+        }
+
+
+
     }
 }
