@@ -12,3 +12,10 @@ C:\Users\Sithobile Mkhabela\source\repos\ST10448774_PROG6221_POE\ChatBot\obj\Deb
 C:\Users\Sithobile Mkhabela\source\repos\ST10448774_PROG6221_POE\ChatBot\obj\Debug\ChatBot.csproj.CoreCompileInputs.cache
 C:\Users\Sithobile Mkhabela\source\repos\ST10448774_PROG6221_POE\ChatBot\obj\Debug\ChatBot.exe
 C:\Users\Sithobile Mkhabela\source\repos\ST10448774_PROG6221_POE\ChatBot\obj\Debug\ChatBot.pdb
+C:\Users\Sithobile Mkhabela\OneDrive\Documentos\GitHub\ST10448774_PROG6221_POEPART2\ST10448774_PROG6221_POE\ChatBot\bin\Debug\ChatBot.exe.config
+C:\Users\Sithobile Mkhabela\OneDrive\Documentos\GitHub\ST10448774_PROG6221_POEPART2\ST10448774_PROG6221_POE\ChatBot\bin\Debug\ChatBot.exe
+C:\Users\Sithobile Mkhabela\OneDrive\Documentos\GitHub\ST10448774_PROG6221_POEPART2\ST10448774_PROG6221_POE\ChatBot\bin\Debug\ChatBot.pdb
+C:\Users\Sithobile Mkhabela\OneDrive\Documentos\GitHub\ST10448774_PROG6221_POEPART2\ST10448774_PROG6221_POE\ChatBot\obj\Debug\ChatBot.csproj.AssemblyReference.cache
+C:\Users\Sithobile Mkhabela\OneDrive\Documentos\GitHub\ST10448774_PROG6221_POEPART2\ST10448774_PROG6221_POE\ChatBot\obj\Debug\ChatBot.csproj.CoreCompileInputs.cache
+C:\Users\Sithobile Mkhabela\OneDrive\Documentos\GitHub\ST10448774_PROG6221_POEPART2\ST10448774_PROG6221_POE\ChatBot\obj\Debug\ChatBot.exe
+C:\Users\Sithobile Mkhabela\OneDrive\Documentos\GitHub\ST10448774_PROG6221_POEPART2\ST10448774_PROG6221_POE\ChatBot\obj\Debug\ChatBot.pdb

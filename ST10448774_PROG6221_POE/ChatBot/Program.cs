@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Media;
 using System.Speech.Synthesis;
 using System.Threading;
@@ -10,7 +9,7 @@ namespace ChatBot
     {
 
         static string userName;
-        
+
         static void Main(string[] args)
         {
 
@@ -55,7 +54,6 @@ namespace ChatBot
                 Console.ResetColor();
             }
 
-            Dictionary<string, string> memory = new Dictionary<string, string>();
             //Welcome message
             Console.WriteLine("\n<<<<<<<<<<  Welcome to the Cybersecurity Chatbot!  >>>>>>>>>>");
             Console.WriteLine();
@@ -63,28 +61,24 @@ namespace ChatBot
             Console.Write("\nEnter your username: ");
             Console.ForegroundColor = ConsoleColor.Yellow;
             userName = Console.ReadLine().Trim() ?? "User";
-            memory["userName"] = userName;
-            Console.WriteLine("Got it! I'll remember that your username is " + userName + ".\n");
             Console.ResetColor();
             TypeWrite("Nice to meet you, " + userName + "!", 30);
             Console.WriteLine();
 
             StartChat();
-            
+            string Input = "";
+
             
         }
 
         static void StartChat()
         {
-            Console.WriteLine("Topics:\n- Cybersecurity\n  *Common cyberattacks\r\n  *Security measures against cyberattacks\r\n- Phishing\n  *Phishing safety precautions\r\n  *Types of phishing\r\n  *Phishing tips\r\n- Password safety\n  *Password safety practices\r\n- Safe browsing\n  *Safe browsing practices\r\n  *Tools used to ensure safe browsing\r\n- Scams\n  *Types of scams\r\n- Privacy *Privacy practices\r\n");
             Console.WriteLine("\nYou can ask me questions like:");
             Console.WriteLine("- How are you?");
             Console.WriteLine("- What's your purpose?");
-            Console.WriteLine("- What can I ask you?");
-            Console.WriteLine("- What is/define...");
-            Console.WriteLine("- Give me a list of security measures/ ");
-            Console.WriteLine("- Tell me more/elaborate...INSERT TOPIC");
-            Console.WriteLine("- Tell me more...INSERT PRACTICE");
+            Console.WriteLine("- Tell me about phishing");
+            Console.WriteLine("- What is password safety?");
+            Console.WriteLine("- What is safe browsing?");
             Console.WriteLine("Type 'exit' or 'bye' to leave.\n");
             Console.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" + "\n Start the chat:\n");
 
@@ -116,10 +110,12 @@ namespace ChatBot
                 }
 
                 Input inputt = new Input();
-                inputt.RespondToInput(input, userName);
+                inputt.RespondToInput();
 
             }
         }
+
+        
 
         static void TypeWrite(string text, int delayMs)
         {
